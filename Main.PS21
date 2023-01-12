@@ -16,11 +16,15 @@
  
     $DropDown2 = new-object System.Windows.Forms.ComboBox
     $DropDown2.Location = new-object System.Drawing.Size(130,60)
-    $DropDown2.Size = new-object System.Drawing.Size(50,40)
+    $DropDown2.Size = new-object System.Drawing.Size(70,40)
+    @('blank',‘1’,’2’,’3',‘4’,’5’,’6’,‘7’,’8’,’9’) | ForEach-Object {[void] $dropDown2.Items.Add($_)}
+    $DropDown2.SelectedIndex = 0
 
     $DropDown3 = new-object System.Windows.Forms.ComboBox
     $DropDown3.Location = new-object System.Drawing.Size(130,90)
-    $DropDown3.Size = new-object System.Drawing.Size(50,40)
+    $DropDown3.Size = new-object System.Drawing.Size(70,40)
+    @('blank',‘1’,’2’,’3',‘4’,’5’,’6’,‘7’,’8’,’9’) | ForEach-Object {[void] $dropDown3.Items.Add($_)}
+    $DropDown3.SelectedIndex = 0
 
     #Add a label
     $Description = New-Object system.Windows.Forms.Label
@@ -28,7 +32,7 @@
     $Description.AutoSize = $false
     $Description.width = 450
     $Description.height = 50
-    $Description.location = New-Object System.Drawing.Point(20,50)
+    $Description.location = New-Object System.Drawing.Point(110,50)
     $Description.Font = ‘Microsoft Sans Serif,10’
  
  
@@ -40,11 +44,7 @@
     $Form.Controls.Add($DropDown2)
     $Form.Controls.Add($DropDown3)      
  
-    $DropDown1.Add_SelectedIndexChanged({
-    $selected =  $DropDown1.SelectedItem#
-    echo "choice 1" $selected
-
-    })   
+    $DropDown1.Add_SelectedIndexChanged({$selected =  $DropDown1.SelectedIndex})   
   
    
     $Form.Add_Shown({$Form.Activate()})
