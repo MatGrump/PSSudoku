@@ -8,6 +8,8 @@
     $Font = New-Object System.Drawing.Font("Times New Roman",12)
     $Form.Font = $Font
     
+    $InitialPuzzle= @((1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9))
+
     # Dropdown selections
     $DropDown1 = new-object System.Windows.Forms.ComboBox 
     $DropDown1.Location = new-object System.Drawing.Size(130,30)
@@ -66,17 +68,16 @@
     $form.Controls.Add($OKButton)
     $form.Controls.Add($CancelButton)   
 
-
  
     #capture restuls 
     $result = $form.ShowDialog()
 
         if ($result -eq [System.Windows.Forms.DialogResult]::OK)
         {
-            $x = $DropDown1.SelectedItem
-            $y = $DropDown1a.SelectedItem
-            $x
-            $y
+            $InitialPuzzle[0][0] = $DropDown1.SelectedItem
+            $InitialPuzzle[0][1] = $DropDown1a.SelectedItem
+            $InitialPuzzle
+            
         }           
 
    
