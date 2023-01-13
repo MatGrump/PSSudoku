@@ -1,50 +1,81 @@
    # Set the size of your form
     $Form = New-Object System.Windows.Forms.Form
-    $Form.width = 500
-    $Form.height = 200
+    $Form.Width = 600
+    $Form.height = 600
     $Form.Text = ”Fronks Sudoku solver”
  
     # Set the font of the text to be used within the form
-    $Font = New-Object System.Drawing.Font("Times New Roman",12)
+    $Font = New-Object System.Drawing.Font("Times New Roman",10)
     $Form.Font = $Font
     
     $InitialPuzzle= @((1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9))
 
+    # The number of combo boxes required:
+    $count = 81
+    $i= 0
+    $x=30
+    $y=30
+
+    1..$count | ForEach-Object {"ComboBox$PSitem"} | ForEach{
+    $CurrentObj = $null
+    $CurrentObj = New-Object System.Windows.Forms.ComboBox
+    
+    if ((($i/9) -is [int]) -and ($i -gt 0))
+        {
+        $i
+            $y=$y + 50
+            $x=$x - 540
+           
+        }
+
+    # Increment location values
+    $CurrentObj.Location = new-object System.Drawing.Size($x,($y))
+    $CurrentObj.Size = new-object System.Drawing.Size (55,40)
+    @('blank',‘1’,’2’,’3',‘4’,’5’,’6’,‘7’,’8’,’9’) | ForEach-Object {[void] $CurrentObj.Items.Add($_)}
+    $CurrentObj.SelectedIndex = 0
+
+    Write-Host $CurrentObj.Text $CurrentObj.Location
+    # Uncomment the following to add the button to $form
+    $form.Controls.Add($CurrentObj)
+    $x = $x + 60
+    $i++
+    }
+
     # Dropdown selections
-    $DropDown1 = new-object System.Windows.Forms.ComboBox 
-    $DropDown1.Location = new-object System.Drawing.Size(130,30)
-    $DropDown1.Size = new-object System.Drawing.Size(60,40)
-    @('blank',‘1’,’2’,’3',‘4’,’5’,’6’,‘7’,’8’,’9’) | ForEach-Object {[void] $dropDown1.Items.Add($_)}
-    $DropDown1.SelectedIndex = 0
+    #$DropDown1 = New-Object System.Windows.Forms.ComboBox 
+    #$DropDown1.Location = new-object System.Drawing.Size(130,30)
+    #$DropDown1.Size = new-object System.Drawing.Size(60,40)
+    #@('blank',‘1’,’2’,’3',‘4’,’5’,’6’,‘7’,’8’,’9’) | ForEach-Object {[void] $dropDown1.Items.Add($_)}
+    #$DropDown1.SelectedIndex = 0
 
-    $DropDown1a = new-object System.Windows.Forms.ComboBox 
-    $DropDown1a.Location = new-object System.Drawing.Size(200,30)
-    $DropDown1a.Size = new-object System.Drawing.Size(60,40)
-    @('blank',‘1’,’2’,’3',‘4’,’5’,’6’,‘7’,’8’,’9’) | ForEach-Object {[void] $dropDown1a.Items.Add($_)}
-    $DropDown1a.SelectedIndex = 0
+    #$DropDown1a = new-object System.Windows.Forms.ComboBox 
+    #$DropDown1a.Location = new-object System.Drawing.Size(200,30)
+    #$DropDown1a.Size = new-object System.Drawing.Size(60,40)
+    #@('blank',‘1’,’2’,’3',‘4’,’5’,’6’,‘7’,’8’,’9’) | ForEach-Object {[void] $dropDown1a.Items.Add($_)}
+    #$DropDown1a.SelectedIndex = 0
  
-    $DropDown2 = new-object System.Windows.Forms.ComboBox
-    $DropDown2.Location = new-object System.Drawing.Size(130,60)
-    $DropDown2.Size = new-object System.Drawing.Size(60,40)
-    @('blank',‘1’,’2’,’3',‘4’,’5’,’6’,‘7’,’8’,’9’) | ForEach-Object {[void] $dropDown2.Items.Add($_)}
-    $DropDown2.SelectedIndex = 0
+    #$DropDown2 = new-object System.Windows.Forms.ComboBox
+    #$DropDown2.Location = new-object System.Drawing.Size(130,60)
+    #$DropDown2.Size = new-object System.Drawing.Size(60,40)
+    #@('blank',‘1’,’2’,’3',‘4’,’5’,’6’,‘7’,’8’,’9’) | ForEach-Object {[void] $dropDown2.Items.Add($_)}
+    #$DropDown2.SelectedIndex = 0
 
-    $DropDown3 = new-object System.Windows.Forms.ComboBox
-    $DropDown3.Location = new-object System.Drawing.Size(130,90)
-    $DropDown3.Size = new-object System.Drawing.Size(60,40)
-    @('blank',‘1’,’2’,’3',‘4’,’5’,’6’,‘7’,’8’,’9’) | ForEach-Object {[void] $dropDown3.Items.Add($_)}
-    $DropDown3.SelectedIndex = 0
+    #$DropDown3 = new-object System.Windows.Forms.ComboBox
+    #$DropDown3.Location = new-object System.Drawing.Size(130,90)
+    #$DropDown3.Size = new-object System.Drawing.Size(60,40)
+    #@('blank',‘1’,’2’,’3',‘4’,’5’,’6’,‘7’,’8’,’9’) | ForEach-Object {[void] $dropDown3.Items.Add($_)}
+    #$DropDown3.SelectedIndex = 0
 
     #Add a label
     $label = New-Object System.Windows.Forms.Label
     $label.Location = New-Object System.Drawing.Point(10,10)
     $label.Size = New-Object System.Drawing.Size(280,20)
     $label.Text = 'Please enter the puzzle bellow:'
-    $form.Controls.Add($label)
+  
 
     #OK Button
     $OKButton = New-Object System.Windows.Forms.Button
-    $OKButton.Location = New-Object System.Drawing.Point(75,120)
+    $OKButton.Location = New-Object System.Drawing.Point(200,500)
     $OKButton.Size = New-Object System.Drawing.Size(75,23)
     $OKButton.Text = 'OK'
     $OKButton.DialogResult = [System.Windows.Forms.DialogResult]::OK
@@ -52,7 +83,7 @@
 
     #Cancel Button
     $CancelButton = New-Object System.Windows.Forms.Button
-    $CancelButton.Location = New-Object System.Drawing.Point(150,120)
+    $CancelButton.Location = New-Object System.Drawing.Point(275,500)
     $CancelButton.Size = New-Object System.Drawing.Size(75,23)
     $CancelButton.Text = 'Cancel'
     $CancelButton.DialogResult = [System.Windows.Forms.DialogResult]::Cancel
@@ -60,10 +91,10 @@
     
 
     #Display elements
-    $Form.Controls.Add($DropDown1)
-    $Form.Controls.Add($DropDown1a)  
-    $Form.Controls.Add($DropDown2)
-    $Form.Controls.Add($DropDown3)
+    #$Form.Controls.Add($DropDown1)
+    #$Form.Controls.Add($DropDown1a)  
+    #$Form.Controls.Add($DropDown2)
+    #$Form.Controls.Add($DropDown3)
     $form.Controls.Add($label)
     $form.Controls.Add($OKButton)
     $form.Controls.Add($CancelButton)   
