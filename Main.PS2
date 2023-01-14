@@ -5,7 +5,7 @@
     $Form.Text = ”Fronks Sudoku solver”
  
     # Set the font of the text to be used within the form
-    $Font = New-Object System.Drawing.Font("Times New Roman",10)
+    $Font = New-Object System.Drawing.Font("Times New Roman",8)
     $Form.Font = $Font
     
     $InitialPuzzle= @((1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9),(1,2,3,4,5,6,7,8,9))
@@ -52,7 +52,7 @@
     $OKButton = New-Object System.Windows.Forms.Button
     $OKButton.Location = New-Object System.Drawing.Point(200,500)
     $OKButton.Size = New-Object System.Drawing.Size(75,23)
-    $OKButton.Text = 'OK'
+    $OKButton.Text = 'Solve!'
     $OKButton.DialogResult = [System.Windows.Forms.DialogResult]::OK
     $form.AcceptButton = $OKButton
 
@@ -63,7 +63,15 @@
     $CancelButton.Text = 'Cancel'
     $CancelButton.DialogResult = [System.Windows.Forms.DialogResult]::Cancel
     $form.CancelButton = $CancelButton
-    
+
+    #Draw Grid
+    $Line1 = new-object Drawing.Pen Black
+    $Line1.width = 2
+    $formGraphics = $form.createGraphics()
+    $form.add_paint({$formGraphics.DrawLine($Line1, 207, 30, 207, 455)}) 
+    $form.add_paint({$formGraphics.DrawLine($Line1, 387, 30, 387, 455)})
+    $form.add_paint({$formGraphics.DrawLine($Line1, 25, 165, 580, 165)})
+    $form.add_paint({$formGraphics.DrawLine($Line1, 25, 315, 580, 315)})      
 
     #Display elements
     $form.Controls.Add($label)
