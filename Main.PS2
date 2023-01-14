@@ -22,10 +22,8 @@
     
     if ((($i/9) -is [int]) -and ($i -gt 0))
         {
-        $i
             $y=$y + 50
-            $x=$x - 540
-           
+            $x=$x - 540    
         }
 
     # Increment location values
@@ -34,7 +32,9 @@
     @('blank',‘1’,’2’,’3',‘4’,’5’,’6’,‘7’,’8’,’9’) | ForEach-Object {[void] $CurrentObj.Items.Add($_)}
     $CurrentObj.SelectedIndex = 0
 
-    Write-Host $CurrentObj.Text $CurrentObj.Location
+    Remove-Variable -Name "value$i"
+    New-Variable "value$i" $CurrentObj
+
     # Uncomment the following to add the button to $form
     $form.Controls.Add($CurrentObj)
     $x = $x + 60
@@ -79,18 +79,27 @@
     $form.Controls.Add($CancelButton)   
 
  
-    #capture restuls 
+    #capture results 
     $result = $form.ShowDialog()
+
+    $Variablename = "$Button"
 
         if ($result -eq [System.Windows.Forms.DialogResult]::OK)
         {
-            $InitialPuzzle[0][0] = $DropDown1.SelectedItem
-            $InitialPuzzle[0][1] = $DropDown1a.SelectedItem
-            $InitialPuzzle
-            
+            $z=0
+            $x=0
+
+            For ($i=0; $i -lt 81; $i++) 
+                {
+                if ((($i/9) -is [int]) -and ($i -gt 0))
+                    {
+                    $z=$z+1
+                    $x=$x-9
+                    }
+                $CurrentValue = Get-Variable -name "value$i" -ValueOnly
+                $InitialPuzzle[$z][$x] =$CurrentValue.SelectedItem   
+                $x = $x + 1
+                     
+                }
+             
         }           
-
-   
-  
- 
-
