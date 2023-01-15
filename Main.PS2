@@ -105,9 +105,52 @@
         }           
 
 
+function check-row{
 
-function check-row {}
-function check-column {}
+param (
+    [Parameter(Mandatory=$true)]
+    $Row2Check 
+    )
+
+$Row2Check = $Row2Check -ne "blank" 
+
+$Duplicatecheck = $Row2Check | select -Unique
+$RowValidity =  Compare-Object -ReferenceObject $Row2Check -DifferenceObject $Duplicatecheck 
+
+if( $RowValidity -ne $null)
+    {
+    Return $False
+    }else{
+        Return $true}
+}
+
+function check-column{
+
+param (
+    [Parameter(Mandatory=$true)]
+    $InitialPuzzle, 
+    [Parameter(Mandatory=$true)]
+    $ColumnNumber
+    )
+
+$Column2Check = @()
+
+    for ($num = 0 ; $num -le 8 ; $num++)
+    {
+    $Column2Check += $InitialPuzzle[$num][$ColumnNumber] 
+    }
+
+$Column2Check = $Column2Check -ne "blank" 
+$Duplicatecheck = $Column2Check | select -Unique
+$ColumnValidity =  Compare-Object -ReferenceObject $Column2Check -DifferenceObject $Duplicatecheck 
+
+if( $ColumnValidity -ne $null)
+    {
+    Return $False
+    }else{
+        Return $true}
+}
+
 function check-square{}
 
 
