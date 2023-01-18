@@ -105,7 +105,7 @@
         }           
 
 
-function check-row{
+function check-row{ #check if rows are valid
 
 param (
     [Parameter(Mandatory=$true)]
@@ -115,7 +115,7 @@ param (
 $Row2Check = $Row2Check -ne "blank" 
 
 $Duplicatecheck = $Row2Check | select -Unique
-$RowValidity =  Compare-Object -ReferenceObject $Row2Check -DifferenceObject $Duplicatecheck 
+$RowValidity =  Compare-Object -ReferenceObject $Row2Check -DifferenceObject $Duplicatecheck -ErrorAction Ignore
 
 if( $RowValidity -ne $null)
     {
@@ -124,7 +124,7 @@ if( $RowValidity -ne $null)
         Return $true}
 }
 
-function check-column{
+function check-column{ #check if columns are valid
 
 param (
     [Parameter(Mandatory=$true)]
@@ -151,6 +151,49 @@ if( $ColumnValidity -ne $null)
         Return $true}
 }
 
-function check-square{}
+function check-square{ #check if squares are valid
+
+param (
+    [Parameter(Mandatory=$true)]
+    $InitialPuzzle, 
+    [Parameter(Mandatory=$true)]
+    $SquareNumber
+    )
+ 
+$Square1 = @()
+$Square2 = @()
+$Square3 = @()
+$Square4 = @()
+$Square5 = @()
+$Square6 = @()
+$Square7 = @()
+$Square8 = @()
+$Square9 = @()
+
+   $Square1 = (($InitialPuzzle[0][0],$InitialPuzzle[0][1],$InitialPuzzle[0][2]),($InitialPuzzle[1][0],$InitialPuzzle[1][1],$InitialPuzzle[1][2]),($InitialPuzzle[2][0],$InitialPuzzle[2][1],$InitialPuzzle[2][2]))
+   $Square2 = (($InitialPuzzle[0][3],$InitialPuzzle[0][4],$InitialPuzzle[0][5]),($InitialPuzzle[1][3],$InitialPuzzle[1][4],$InitialPuzzle[1][5]),($InitialPuzzle[2][3],$InitialPuzzle[2][4],$InitialPuzzle[2][5]))
+   $Square3 = (($InitialPuzzle[0][6],$InitialPuzzle[0][7],$InitialPuzzle[0][8]),($InitialPuzzle[1][6],$InitialPuzzle[1][7],$InitialPuzzle[1][8]),($InitialPuzzle[2][6],$InitialPuzzle[2][7],$InitialPuzzle[2][8]))
+
+   $Square4 = (($InitialPuzzle[3][0],$InitialPuzzle[3][1],$InitialPuzzle[3][2]),($InitialPuzzle[4][0],$InitialPuzzle[4][1],$InitialPuzzle[4][2]),($InitialPuzzle[5][0],$InitialPuzzle[5][1],$InitialPuzzle[5][2]))
+   $Square5 = (($InitialPuzzle[3][3],$InitialPuzzle[3][4],$InitialPuzzle[3][5]),($InitialPuzzle[4][3],$InitialPuzzle[4][4],$InitialPuzzle[4][5]),($InitialPuzzle[5][3],$InitialPuzzle[5][4],$InitialPuzzle[5][5]))
+   $Square6 = (($InitialPuzzle[3][6],$InitialPuzzle[3][7],$InitialPuzzle[3][8]),($InitialPuzzle[4][6],$InitialPuzzle[4][7],$InitialPuzzle[4][8]),($InitialPuzzle[5][6],$InitialPuzzle[5][7],$InitialPuzzle[5][8]))
+
+   $Square7 = (($InitialPuzzle[6][0],$InitialPuzzle[6][1],$InitialPuzzle[6][2]),($InitialPuzzle[7][0],$InitialPuzzle[7][1],$InitialPuzzle[7][2]),($InitialPuzzle[8][0],$InitialPuzzle[8][1],$InitialPuzzle[8][2]))
+   $Square8 = (($InitialPuzzle[6][3],$InitialPuzzle[6][4],$InitialPuzzle[6][5]),($InitialPuzzle[7][3],$InitialPuzzle[7][4],$InitialPuzzle[7][5]),($InitialPuzzle[8][3],$InitialPuzzle[8][4],$InitialPuzzle[8][5]))
+   $Square9 = (($InitialPuzzle[6][6],$InitialPuzzle[6][7],$InitialPuzzle[6][8]),($InitialPuzzle[7][6],$InitialPuzzle[7][7],$InitialPuzzle[7][8]),($InitialPuzzle[8][6],$InitialPuzzle[8][7],$InitialPuzzle[8][8]))
+
+$Square2Check = @()
+
+    $SquareCheck = Get-Variable -name "Square$SquareNumber" -ValueOnly
+    $SquareAsRow = $Squarecheck[0] + $Squarecheck[1] + $Squarecheck[2]
+    $SquareValidity = check-row -Row2Check $SquareAsRow 
+
+Return $SquareValidity
+
+}
+
+
+
+
 
 
