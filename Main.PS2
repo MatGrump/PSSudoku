@@ -62,7 +62,6 @@ Return $SquareValidity
 }
 
     Function check-column{ #check if columns are valid
-
 param (
     [Parameter(Mandatory=$true)]
     $InitialPuzzle, 
@@ -77,7 +76,8 @@ $Column2Check = @()
     $Column2Check += $InitialPuzzle[$num][$ColumnNumber] 
     }
 
-$Column2Check = $Column2Check -ne "blank" 
+$Column2Check = $Column2Check -ne "blank"
+ 
 $Duplicatecheck = $Column2Check | select -Unique
 
 if (!$Duplicatecheck) {$Duplicatecheck = $Row2Check } #$Null check as $Null creates issues
@@ -89,6 +89,30 @@ if( $ColumnValidity -ne $null)
     Return $False
     }else{
         Return $true}
+}
+
+    Function check-ValidPuzzle{
+
+param (
+    [Parameter(Mandatory=$true)]
+    $InitialPuzzle 
+    )
+
+$ValidPuzzle =@()
+
+ for ($num = 0 ; $num -le 8 ; $num++)
+    {  
+    $ValidPuzzle =$ValidPuzzle + (check-column -InitialPuzzle $InitialPuzzle -ColumnNumber $num)
+    $ValidPuzzle =$ValidPuzzle + (check-row -Row2Check $InitialPuzzle[$num])
+    $ValidPuzzle =$ValidPuzzle + (check-square -InitialPuzzle $InitialPuzzle -SquareNumber ($num+1))
+    }
+
+    $ValidPuzzle = ($ValidPuzzle -match $false).count
+
+    if ($ValidPuzzle -ne 0)
+    { 
+    return $False
+    }else {Return $true}
 }
     
     # Set the size of your form
@@ -171,6 +195,7 @@ if( $ColumnValidity -ne $null)
     $form.Controls.Add($OKButton)
     $form.Controls.Add($CancelButton)   
 
+ 
     #capture results 
     $result = $form.ShowDialog()
 
@@ -193,29 +218,6 @@ if( $ColumnValidity -ne $null)
                 $x = $x + 1
                      
                 }
+        check-ValidPuzzle -InitialPuzzle $InitialPuzzle
              
         }           
-
-function check-ValidPuzzle
-{
-param (
-    [Parameter(Mandatory=$true)]
-    $InitialPuzzle 
-    )
-
-$ValidPuzzle =@()
-
- for ($num = 0 ; $num -le 8 ; $num++)
-    {  
-    $ValidPuzzle =$ValidPuzzle + (check-column -InitialPuzzle $InitialPuzzle -ColumnNumber $num)
-    $ValidPuzzle =$ValidPuzzle + (check-row -Row2Check $InitialPuzzle[$num])
-    $ValidPuzzle =$ValidPuzzle + (check-square -InitialPuzzle $InitialPuzzle -SquareNumber ($num+1))
-    }
-
-    $ValidPuzzle = ($ValidPuzzle -match $false).count
-
-    if ($ValidPuzzle -ne 0)
-    { 
-    return $False
-    }else {Return $true}
-}
