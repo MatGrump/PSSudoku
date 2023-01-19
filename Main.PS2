@@ -80,7 +80,7 @@ $Column2Check = $Column2Check -ne "blank"
  
 $Duplicatecheck = $Column2Check | select -Unique
 
-if (!$Duplicatecheck) {$Duplicatecheck = $Row2Check } #$Null check as $Null creates issues
+if (!$Duplicatecheck) {$Duplicatecheck = $Column2Check } #$Null check as $Null creates issues
 
 $ColumnValidity =  Compare-Object -ReferenceObject $Column2Check -DifferenceObject $Duplicatecheck -ErrorAction SilentlyContinue
 
